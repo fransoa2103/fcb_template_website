@@ -107,6 +107,11 @@ box.addEventListener('click', () =>
         }
     activeMenu(activeToggle);
 });
+
+
+// 
+// scroll horizontal
+// 
 let posX = 0;
 let direction = true;
 window.addEventListener('mousewheel', (e)=>{

@@ -2,13 +2,11 @@
 
 const header    = document.querySelector('header');
 const nav       = document.querySelector('nav');
-const li        = Array.from(document.querySelectorAll('li'));
-const liens     = Array.from(document.querySelectorAll('a.backMenu'));
+const liensMenu        = Array.from(document.querySelectorAll('li'));
+const liensBackMenu     = Array.from(document.querySelectorAll('a.backMenu'));
 const hamburger = document.querySelector('.hamburger');
 const box       = document.querySelector('.box');
 const container = document.querySelector('.container');
-const page = document.getElementById('page1');
-console.log(page);
 let activeToggle = false;
 
 window.addEventListener('load', ()=>{
@@ -16,7 +14,7 @@ window.addEventListener('load', ()=>{
         { nav.classList.add('active')}
 });
 
-liens.forEach
+liensBackMenu.forEach
 (   a =>
     {   
         a.addEventListener
@@ -29,7 +27,7 @@ liens.forEach
                     box.classList.remove('active');
                     container.classList.remove('active');
                     activeToggle = false;
-                    li.forEach(i => {
+                    liensMenu.forEach(i => {
                         i.classList.remove('active')
                     });                        
                                        
@@ -40,6 +38,7 @@ liens.forEach
     }
 );
 
+// activation du menu déroulant en format écran < 970px
 function activeMenu(activeToggle)
 {
     if (activeToggle == true)
@@ -49,22 +48,23 @@ function activeMenu(activeToggle)
         box.classList.add('active');
         container.classList.add('active');
         
-        li.forEach(i => {
+        liensMenu.forEach(i => {
             i.classList.add('active')
         });
     }
     else
     {
-        header.classList.remove('active');
-        nav.classList.remove('active');
-        box.classList.remove('active');
-        container.classList.remove('active');
+        header.classList.remove     ('active');
+        nav.classList.remove        ('active');
+        box.classList.remove        ('active');
+        container.classList.remove  ('active');
           
-        li.forEach(i => {
+        liensMenu.forEach(i => {
             i.classList.remove('active')
         });
     }    
 };
+activeMenu();
 
 function resizeMenu()
 {
@@ -73,7 +73,7 @@ function resizeMenu()
         hamburger.classList.remove('active');
         header.classList.remove('active');
         box.classList.remove('active');
-        li.forEach(i => {
+        liensMenu.forEach(i => {
             i.classList.remove('active')
         });
         nav.classList.add('active');
@@ -86,53 +86,69 @@ function resizeMenu()
         hamburger.classList.add('active');
     }
 };
-
 resizeMenu();
-activeMenu();
 
+// En fonction de la taille de l'écran le menu hamburger est activé ou pas
 window.addEventListener('resize', () =>
 {
     resizeMenu()
+    scrollHorizontal(0);
 });
 
+// renvoie boolean lorsque le menu hamburger est cliqué
 box.addEventListener('click', () =>
 {
-    if (activeToggle == false)
-        {
-            activeToggle = true;
+    if  (   activeToggle == false)
+        {   activeToggle = true;
         }
     else
-        {
-            activeToggle = false;
+        {   activeToggle = false;
         }
     activeMenu(activeToggle);
 });
 
 
 // 
-// scroll horizontal
-// 
+// scroll horizontal uniquement si window.innerhtml > 970px donc desktop PC
+// Le scroll horizontal peut être activée par la roulette mais aussi par le menu
+// il faut donc au click.menu calculer posX
 let posX = 0;
-let direction = true;
-window.addEventListener('mousewheel', (e)=>{
-    console.log(posX);
-    if (direction == true)
-        {   posX += window.innerWidth; 
-            if (posX > (window.innerWidth*3))
-            {   direction == false;
-                posX -= window.innerWidth;
-            }
+// ici calcul de posX au clik Menu
+liensMenu.forEach(li =>{
+    li.addEventListener('click',(e) => {
+    for (let i=0; i<liensMenu.length;i++)
+    {
+        if (liensMenu[i] == li){
+            posX = window.innerWidth*i;
+            console.log(posX);
         }
-    else 
-        {   posX -= window.innerWidth;
-            if (posX < 0)
-            {   posX -= window.innerWidth;
-                direction = true;
-            }
-        }
+    }
+    });
+});
 
+// fonction de déplacement
+function scrollHorizontal(posX){
     window.scrollTo({
         left: posX,
         behavior: 'smooth'
-      });
+    });
+};
+
+// ici calcul de posX en fonction de la roulette haut ou bas (deltaY)
+window.addEventListener('mousewheel', (e)=>{
+    if (window.innerWidth>970)
+    {
+        if (e.deltaY > 0)
+        {   if (posX <= window.innerWidth*2)
+            {   posX += window.innerWidth;
+                scrollHorizontal(posX);
+            }
+        }
+        else
+        {   if (posX > 0)
+            {   posX -= window.innerWidth;
+                scrollHorizontal(posX);
+            }
+        }
+    }
 });

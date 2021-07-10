@@ -142,11 +142,12 @@ function scrollHorizontal(posX){
         behavior: 'smooth'
     });
 };
+
 // ---------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------
 // ArrowBackTop
-window.addEventListener('scroll', ()=>
+window.addEventListener('scroll', (e)=>
 {   // console.dir(document.documentElement)
     const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
     // console.log(scrollTop, clientHeight, scrollHeight);

@@ -130,7 +130,7 @@ li.active{
     transition:             top 0.4s 0.25s ease-in-out;
 }
 section {
-    position:           relative;
+    /* position:           relative; */
     width:              100%;
     color:              aliceblue;
     padding:            15px;
@@ -147,15 +147,25 @@ h2 {
     color:              aliceblue;
     padding:            5px 0;
 }
-a.backMenu, a.nextPage {
+a.nextPage {
     color: goldenrod;
     font-size: 0.8rem;
     font-weight: bold;
 }
-div>a.backMenu {
-    color: green;
-    text-align: center;
+#backMenu {
+    display: none;
+} 
+#backMenu.active {
+    display: block;
+    position: sticky;
+    z-index: 100;
+    bottom: 25px;
+    text-align: end;
+} 
+#backMenu.active img{
+    margin: 1%;
 }
+
 @media screen and (min-width:970px) {
     header {
         position:   fixed;
@@ -165,17 +175,20 @@ div>a.backMenu {
     section img {
         max-height: 80vh;    
     }
+    /* Ici en fonction du nombre de pages dont vs aurez besoin */
+    /* il faudra modifier (dans mon ex nbPages = 4) */
+    /* width: nbPages x 100 = 400vw; */
+    /* grid-template-columns:  repeat(nbPages, 100vw); */
+    /* et dans JS section CALCUL DE POSX modifier nbPages */
     .container {
         position:               relative;
         top:                    10vh;
         width:                  400vw;
-        grid-template-rows:     auto;
+        grid-template-rows:     1fr;
         grid-template-columns:  repeat(4, 100vw);
     }
-    .container.active {
-        position:   relative;
-        top:        10vh;
-    }
+    /* je supprime les liens "page suivante" */
+    /* puisque celles-ci sont accessibles via le menu et le scroll */
     section a {
         display:    none;
     }

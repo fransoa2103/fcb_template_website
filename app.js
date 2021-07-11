@@ -8,6 +8,10 @@ const nav       = document.querySelector('nav');
 const hamburger = document.querySelector('.hamburger');
 const box       = document.querySelector('.box');
 
+const img3 = document.querySelector('section#page3>img');
+console.log(img3);
+const rectImg3 = img3.getBoundingClientRect();
+console.log(rectImg3);
 let activeToggle = false;
 
 //  au chargement de la page le menu adequat est selectionné
@@ -88,7 +92,6 @@ box.addEventListener('click', () =>
 // ---------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------
 
-// scroll horizontal uniquement si window.innerhtml > 970px donc desktop PC
 // Le scroll horizontal peut être activée par la roulette mais aussi par le menu
 // il faut donc au click.menu calculer posX
 let posX = 0;
@@ -150,11 +153,15 @@ function scrollHorizontal(posX){
 window.addEventListener('scroll', (e)=>
 {   // console.dir(document.documentElement)
     const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
-    // console.log(scrollTop, clientHeight, scrollHeight);
+    console.log(scrollTop, clientHeight, scrollHeight);
     if  (scrollTop>600)
         {   arrowBackTop.classList.add('active');   }
     else
         {   arrowBackTop.classList.remove('active');}
+    if  (scrollTop>1800)
+        {   img3.classList.add('slide-in-elliptic-top-fwd');   }
+    console.log(rectImg3);
+
 });
 // A chaque 'click' retour home page Menu (écran<970)
 // le menu déroulant redevient le hamburger
@@ -169,3 +176,19 @@ arrowBackTop.addEventListener
         }
     }
 );
+
+
+// window.addEventListener('scroll', ()=>{
+//     const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
+//     const topElementBoite = boite.getBoundingClientRect().top;
+//     // console.log(scrollTop, clientHeight, scrollHeight);
+//     if (scrollTop> 500) {
+//         boite.classList.add('active');
+//         console.log(topElementBoite);
+//     }
+// });
+//     if (scrollTop> (scrollTop + topElementBoite).toFixed() - clientHeight*0.75) {
+//         boite.classList.add('active');
+//         console.log(topElementBoite);
+//     }
+// });

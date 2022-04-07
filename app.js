@@ -8,10 +8,53 @@ const nav       = document.querySelector('nav');
 const hamburger = document.querySelector('.hamburger');
 const box       = document.querySelector('.box');
 
+
+// function afficherDate() 
+// {
+//     let cejour = new Date();
+//     let options = {weekday: "long", year: "numeric", month: "long", day: "2-digit"};
+//     let date = cejour.toLocaleDateString("fr-FR", options);
+//     let heure = ("0" + cejour.getHours()).slice(-2) + ":" + ("0" + cejour.getMinutes()).slice(-2) + ":" + ("0" + cejour.getSeconds()).slice(-2);
+//     let dateheure = date + " " + heure;
+//     dateheure = dateheure.replace(/(^\w{1})|(\s+\w{1})/g, lettre => lettre.toUpperCase());
+//     document.getElementById('dateheure').innerHTML = dateheure;
+// }
+// setInterval(afficherDate, 1000);
+
+// ***************************************************************************
+
+function pause(ms) 
+{
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function afficherDate() 
+{
+    while(true) 
+    {
+        await pause(1000);
+        let cejour = new Date();
+        let options = {weekday: "long", year: "numeric", month: "long", day: "2-digit"};
+        let date = cejour.toLocaleDateString("fr-FR", options);
+        let heure = ("0" + cejour.getHours()).slice(-2) + ":" + ("0" + cejour.getMinutes()).slice(-2) + ":" + ("0" + cejour.getSeconds()).slice(-2);
+        let dateheure = date + " " + heure;
+        dateheure = dateheure.replace(/(^\w{1})|(\s+\w{1})/g, lettre => lettre.toUpperCase());
+        document.getElementById('dateheure').innerHTML = dateheure;
+    }
+}
+afficherDate();
+
+// ***************************************************************************
+
+
+
+
+
+
+
+
 const img3 = document.querySelector('section#page3>img');
-console.log(img3);
-const rectImg3 = img3.getBoundingClientRect();
-console.log(rectImg3);
+// const rectImg3 = img3.getBoundingClientRect();
 let activeToggle = false;
 
 //  au chargement de la page le menu adequat est selectionné
@@ -79,12 +122,15 @@ window.addEventListener('resize', () =>
 // renvoie boolean lorsque le menu hamburger est activé
 box.addEventListener('click', () =>
 {
-    if  (   activeToggle == false)
-        {   activeToggle = true;
+    if (activeToggle == false)
+        {
+               activeToggle = true;
         }
     else
-        {   activeToggle = false;
+        {   
+            activeToggle = false;
         }
+
     activeMenu(activeToggle);
 });
 
@@ -126,18 +172,21 @@ window.addEventListener('mousewheel', (e)=>{
     {
         if (e.deltaY > 0)
         {   if (posX <= window.innerWidth*(nbPages-2))
-            {   posX += window.innerWidth;
+            {   
+                posX += window.innerWidth;
                 scrollHorizontal(posX);
             }
         }
         else
         {   if (posX > 0)
-            {   posX -= window.innerWidth;
+            {   
+                posX -= window.innerWidth;
                 scrollHorizontal(posX);
             }
         }
     }
 });
+
 // fonction de déplacement horizontal 'window.scrollTo'
 function scrollHorizontal(posX){
     window.scrollTo({
@@ -147,22 +196,21 @@ function scrollHorizontal(posX){
 };
 
 // ---------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------
 // ArrowBackTop
+// ---------------------------------------------------------------------------------------
 window.addEventListener('scroll', (e)=>
-{   // console.dir(document.documentElement)
+{   
     const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
-    console.log(scrollTop, clientHeight, scrollHeight);
+
     if  (scrollTop>600)
         {   arrowBackTop.classList.add('active');   }
     else
         {   arrowBackTop.classList.remove('active');}
-    if  (scrollTop>1800)
-        {   img3.classList.add('slide-in-elliptic-top-fwd');   }
-    console.log(rectImg3);
+    if  (scrollTop>1900)
+        {   img3.classList.add('tilt-in-fwd-bl');   }
 
 });
+
 // A chaque 'click' retour home page Menu (écran<970)
 // le menu déroulant redevient le hamburger
 arrowBackTop.addEventListener
@@ -176,19 +224,3 @@ arrowBackTop.addEventListener
         }
     }
 );
-
-
-// window.addEventListener('scroll', ()=>{
-//     const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
-//     const topElementBoite = boite.getBoundingClientRect().top;
-//     // console.log(scrollTop, clientHeight, scrollHeight);
-//     if (scrollTop> 500) {
-//         boite.classList.add('active');
-//         console.log(topElementBoite);
-//     }
-// });
-//     if (scrollTop> (scrollTop + topElementBoite).toFixed() - clientHeight*0.75) {
-//         boite.classList.add('active');
-//         console.log(topElementBoite);
-//     }
-// });
